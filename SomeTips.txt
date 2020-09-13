@@ -1,0 +1,16 @@
+** Tips for increasing webisite load time
+- Minimize HTTP requests 
+    + Combining CSS/JS files
+    + Use queries to only load what's needed
+    + CSS sprites (1 hình ảnh lớn gộp tất cả ảnh nhỏ vào kiểu collection icon facebook: https://viblo.asia/p/toi-uu-tai-trang-voi-ky-thuat-css-sprites-naQZR7dQlvx)
+- Utilize CDNs and remove unused scripts/files
+- Browser caching
+- Compress images and optimize files
+
+*** Tips for secure website 
+
+
+
+
+########## References ###########
+https://www.impactbnd.com/blog/website-load-time
