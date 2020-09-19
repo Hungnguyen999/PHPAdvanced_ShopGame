@@ -1,3 +1,4 @@
+ 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
   <a class="navbar-brand" href="#">HưngGamingShop</a>
@@ -7,26 +8,25 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
-      </li>
+    <?php if($_SESSION['username'] AND $_SESSION['userrole']==0): ?>
+      <display></display>
+          <li class="nav-item active">
+            <div class="row">
+              
+              <a class="btn btn-warning ml-3" href="/PHPmvc/index.php?url=userController/Logout">Logout <span class="sr-only">(current)</span></a>
+              <strong><p style="margin: 6px 0 0 1rem;">Hello, <?php echo $_SESSION['name']?></p></strong>
+            </div>
+            
+          </li>
+        <?php else: 
+          ?>
+      <display ></display>
+          <li class="nav-item active">
+            <a class="nav-link" href="/PHPmvc/application/views/Loginpage.php">Đăng nhập <span class="sr-only">(current)</span></a>
+          </li>
+      
+
+      <?php endif; ?>
     </ul>
     <form class="form-inline my-2 my-lg-0 mr-3">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

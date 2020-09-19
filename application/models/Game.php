@@ -1,50 +1,46 @@
 <?php
-    class Game {
-        public $ID;
-        public $Name;
-        public $Price;
-        public $Image;
-        public $Producer;
-        public function __construct($Name,$Price,$Image,$Producer){
-            $this->Name = $Name;
-            $this->Price = $Price;
-            $this->Image = $Image;
-            $this->Producer = $Producer;
-        }
-        
-        public static function getAll(){
-            $listGames = [];
+    class Game extends dbConnector{
+        public function getAll(){
             try{
-                $db = dbConnector::connect(); 
-                $result = mysqli_query($db,'SELECT * FROM Product');
-                while($row = mysqli_fetch_assoc($result)){
-                     $listGames[] = new Game($row['Name'], $row['Price'], $row['Image'], $row['Producer']);
-                }
-                $db->close();
-                return $listGames;
+                $result = mysqli_query($this->con,'SELECT * FROM Product Where Product.Quantity > 0');
+                return $result;
             }
             catch(Exception $e){
-                $db->close(); 
                 throw $e;   
             }
         }
-        public static function gameDetail($name){
+        public function gameDetail($name){
             try{
-                $db = dbConnector::connect(); 
-                $stmt = $db->prepare('SELECT * FROM Product WHERE Product.Name = ?');
+                $stmt = $this->con->prepare('SELECT * FROM Product WHERE Product.Name = ?');
                 $stmt->bind_param('s',$name);
                 $stmt->execute();
                 $result=$stmt->get_result();
-                while($row = mysqli_fetch_assoc($result)){
-                        $gameDetail = new Game($row['Name'], $row['Price'], $row['Image'], $row['Producer']);
-                }
-                return $gameDetail;
+                return $result;
             }
             catch(Exception $e){
-                $db->close(); 
                 throw $e;   
             }
-          
+            
+        } 
+        public function gameInsert($gameName,$gamePrice,$gameProducer,$gameImage,$gameDescription,$gameQuantity){
+            try{
+                if($gamePrice = is_numeric($gamePrice) AND $gameQuantity = is_numeric($gameQuantity)){
+                    $gamePrice = intval($gamePrice);
+                    $gameQuantity = intval($gameQuantity);
+                    $query = $this->con->prepare("INSERT INTO Product (Name, Price, Producer, Image, Descripton, Quantity) VALUES (?,?,?,?,?,?)");
+                    $query->bind_param('sisssi',$gameName,$gamePrice,$gameProducer,$gameImage,$gameDescription,$gameQuantity);
+                    $result = $query->execute();
+                    return $result;
+                }
+                else{
+                    echo 'Vui lòng nhập đúng định dạng';
+                }
+              
+            }
+            catch(Exception $e){
+                throw $e;   
+            }
+            
         } 
     }
 ?>

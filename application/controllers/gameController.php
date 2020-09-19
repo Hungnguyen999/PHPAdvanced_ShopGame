@@ -1,20 +1,18 @@
 <?php
-    require_once('application/config/database.php');
-    require_once('application/models/Game.php');
-    class gameController extends dbConnector {
-        public function __construct() { 
-            $dbcon = new parent(); 
-            // this is not needed in your case
-            // you can use $this->conn = $this->connect(); without calling parent()
-            $this->conn = $dbcon->connect();
-        }
+    class gameController extends Controller {
         public function getAll(){
-            $games = Game::getAll();
-            include_once('../PHPmvc/application/views/Homepage.php');
+             $model = $this->model("Game");
+             $games = $model->getAll();
+            $this->view("Homepage",[
+                'gamelist' => $games
+            ]);
         }
         public function getDetail($name){
-            $gameDetail = Game::gameDetail($_GET['name']);
-            include_once('../PHPmvc/application/views/GameDetailpage.php');
+            $model = $this->model("Game");
+            $gameDetail = $model->gameDetail($name);
+            $this->view("GameDetailpage",[
+                'game' => $gameDetail
+            ]);
         }
     }
 ?>

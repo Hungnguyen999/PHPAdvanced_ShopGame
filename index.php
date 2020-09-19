@@ -1,13 +1,6 @@
-
 <?php
-    require('application/controllers/gameController.php');
-    $gameController = new gameController();
-    if(isset($_GET['name'])){
-        $gameController->getDetail($name);
-    }
-    else{
-        $gameController->getAll();
-    }
-
-
+session_start();
+require_once "./application/Bridge.php";
+$myApp = new App();
+// echo 'cua url' .$_GET['url'];
 ?>
